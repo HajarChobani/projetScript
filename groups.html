@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Gestion des Groupes</h1>
+
+
+<form method="POST" action="/groups" class="form-group mb-4">
+    <div class="mb-3">
+        <label for="nom" class="form-label">Nom du Groupe:</label>
+        <input type="text" id="nom" name="nom" class="form-control" required>
+    </div>
+    <div class="mb-3">
+        <label for="description" class="form-label">Description:</label>
+        <textarea id="description" name="description" class="form-control" rows="3"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Ajouter</button>
+</form>
+
+
+<h2>Liste des Groupes</h2>
+{% if groups %}
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for group in groups %}
+            <tr>
+                <td>{{ group[0] }}</td>
+                <td>{{ group[1] }}</td>
+                <td>{{ group[2] }}</td>
+                <td>
+                    <a href="{{ url_for('group_details', group_id=group[0]) }}" 
+                       class="btn btn-info btn-sm">
+                        Gérer les membres
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<p>Aucun groupe trouvé.</p>
+{% endif %}
+{% endblock %}
